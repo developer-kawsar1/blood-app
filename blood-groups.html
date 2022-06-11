@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <style>
+    * {
+      margin: 0;
+      padding: p;
+      box-sizing: border-box;
+    }
+
+    .bgroups {
+      padding: 5%;
+      padding-top: 100px;
+    }
+
+    .bgroup {
+      padding: 30px 0;
+      background-color: crimson;
+      color: #fff;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 30px;
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bgroups">
+    <div class="bgroup" onclick="window.location.href='abplus.html'">
+      <h2>A+</h2>
+    </div>
+    <div class="bgroup">
+      <h2>A-</h2>
+    </div>
+    <div class="bgroup">
+      <h2>B+</h2>
+    </div>
+    <div class="bgroup">
+      <h2>B-</h2>
+    </div>
+    <div class="bgroup">
+      <h2>AB+</h2>
+    </div>
+    <div class="bgroup">
+      <h2>AB-</h2>
+    </div>
+    <div class="bgroup">
+      <h2>O+</h2>
+    </div>
+    <div class="bgroup">
+      <h2>O-</h2>
+    </div>
+  </div>
+
+
+
+<script>
+  fetch('https://donor-server.herokuapp.com/donors')
+ .then(res=>res.json())
+.then(data=>console.log(data))
+</script>
+</body>
+
+</html>

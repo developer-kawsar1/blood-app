@@ -1,6 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  
+ 
 
+<style>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+  
+.gallery{
+background: rgb(33,37,41);
+color: #fff;
+min-height: 100vh;
+padding: 50px 8%;
+display: flex;
+justify-content: space-between;
+flex-direction: column
+}
 
-hdhdbdhhd hdhd jdbd 
-
-<h1>Heading</h1>
-<a href="https://facebook.com">facebook</a>
+.gallery div{
+  padding: 10px;
+  background: rgb(3,37,11);
+  margin-top: 30px;
+}
+</style>
+</head>
+<body>
+  <div class="gallery">
+    <p class="loding">Loading</p>
+  </div>
+  
+  <footer>
+<script>
+  const gallery=document.querySelector('.gallery')
+  fetch('https://jsonplaceholder.typicode.com/photos')
+ .then(res=>res.json())
+.then(data=>{
+  const myData=data.slice(0,20)
+  for(let item of myData){
+    console.log(item.title)
+    let div=document.createElement('div')
+    div.innerHTML=`
+    
+    <p>${item.title}</p>
+    
+    `
+    
+    document.querySelector('.loding').style.display='none'
+    gallery.appendChild(div)
+  }
+  
+  
+  
+  console.log(myData.length)
+  
+  
+})
+  
+</script>
+</body>
+</html>

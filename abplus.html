@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Donor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+
+    }
+
+    body {
+      background: #fff;
+      font-family: serif;
+    }
+
+    .table-container {
+      padding: 0 10%;
+      margin: 40px auto 0;
+
+    }
+
+    .heading {
+      font-size: 30px;
+      text-align: center;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+
+    }
+
+    .table thead {
+      background-color: #ee2828;
+    }
+
+    .table thead tr th {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      opacity: 1;
+      padding: 12px;
+      vertical-align: top;
+      border: 1px solid #dee2e685;
+    }
+
+    .table tbody tr td {
+      font-size: 14px;
+      letter-spacing: 0.35px;
+      font-weight: normal;
+      color: black;
+      background-color: #fff;
+      padding: 8px;
+      text-align: center;
+      border: 1px solid #dee2e685;
+
+    }
+
+    table tbody tr {
+      
+    }
+
+    nav {
+
+      display: flex;
+      justify-content: center;
+      padding: 4% 2%;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+
+    nav .searchbox {
+      flex-basis: 100%;
+      margin: auto;
+
+    }
+
+    nav .searchbox input {
+      width: 90%;
+      border: none;
+      outline: 0;
+      padding: 8px;
+      border-radius: 25px;
+      display: block;
+      margin: auto;
+      padding: 10px 15px;
+      background: #f1f1f1;
+      border: 1px solid #ccc;
+    }
+
+    nav .btn button {
+      border: none;
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 4px;
+      background: #C40E0E;
+      color: white;
+    }
+
+    .fa {
+      font-size: 25px;
+      color: #D0C315;
+    }
+
+    @media(max-width:768px) {
+
+      thead,
+      tbody {}
+
+      .table-center {
+
+        margin: auto;
+      }
+
+      table:nth-child() {
+        color: red !important;
+        display: none;
+      }
+
+      .table thead {
+        display: none;
+
+      }
+
+      .table .table tbody,
+      .table tr,
+      .table td {
+        display: block;
+        width: 100%;
+
+      }
+
+      .table tr {
+        margin-bottom: 15px;
+      }
+
+      .table tbody tr td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        
+
+
+      }
+
+      .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: 600;
+        font-size: 14px;
+        text-align: left;
+      }
+
+      .table tbody tr:nth-child(odd) td {
+        background-color: #f3f3f3;
+      }
+      td{
+        background: #fff !important ;
+      }
+      td:nth-child(odd){
+        background: #f9f9f9 !important;
+      }
+
+
+    }
+
+
+
+
+
+
+
+
+
+    /* The Modal (background) */
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+    .modal-body {}
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+      color: black;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Modal Header */
+    .modal-header {
+      padding: 2px 16px;
+      background-color: #5cb85c;
+      color: white;
+    }
+
+    /* Modal Body */
+    .modal-body {
+      padding: 2px 16px;
+    }
+
+    /* Modal Footer */
+    .modal-footer {
+      padding: 2px 16px;
+      background-color: #5cb85c;
+      color: white;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .modal-footer button {
+      padding: 6px 10px;
+      border: none;
+    }
+
+    /* Modal Content */
+    .modal-content {
+      position: relative;
+      background-color: #fefefe;
+      margin: auto;
+      padding: 0;
+      border: 1px solid #888;
+      width: 80%;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      animation-name: animatetop;
+      animation-duration: 0.4s
+    }
+
+    .form-control {
+      padding: 2px 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 5px 10px;
+      border: none;
+      background-color: #E1E3FF;
+      outline: none;
+    }
+
+
+    /* Add Animation */
+    @keyframes animatetop {
+      from {
+        top: -300px;
+        opacity: 0
+      }
+
+      to {
+        top: 0;
+        opacity: 1
+      }
+    }
+
+
+
+
+
+    .custom-select {
+      position: relative;
+      font-family: Arial;
+    }
+
+    .custom-select select {
+      display: none;
+      /*hide original SELECT element: */
+    }
+
+    .select-selected {
+      background-color: crimson;
+    }
+
+    /* Style the arrow inside the select element: */
+    .select-selected:after {
+      position: absolute;
+      content: "";
+      top: 14px;
+      right: 10px;
+      width: 0;
+      height: 0;
+      border: 6px solid transparent;
+      border-color: #fff transparent transparent transparent;
+    }
+
+    /* Point the arrow upwards when the select box is open (active): */
+    .select-selected.select-arrow-active:after {
+      border-color: transparent transparent #fff transparent;
+      top: 7px;
+    }
+
+    /* style the items (options), including the selected item: */
+    .select-items div,
+    .select-selected {
+      color: #ffffff;
+      padding: 5px 10px;
+      border: 1px solid transparent;
+      border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+      cursor: pointer;
+    }
+
+    /* Style items (options): */
+    .select-items {
+      position: absolute;
+      background-color: crimson;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 99;
+    }
+
+    /* Hide the items when the select box is closed: */
+    .select-hide {
+      display: none;
+    }
+
+    .select-items div:hover,
+    .same-as-selected {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    #blood {
+      color: crimson;
+      font-weight: bold;
+    }
+
+    .my-footer {
+      padding: 0 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .my-footer i {
+      color: #fff;
+    }
+   .edit{
+     margin-right:10px;
+   }
+.edit .fa{
+  color: green;
+}
+.delete .fa{
+  color: crimson;
+}
+#id{
+  
+  background-color: #fb7374 !important ;
+  border-top-left-radius: 5px;
+  font-weight: bold;
+  color: #fff
+  
+}
+  </style>
+
+</head>
+
+<body>
+  
+
+
+  <div class="table-container">
+    <h1 class="heading">Ab+ Blood Donor Info</h1>
+    <nav>
+      <div class="searchbox">
+        <input type="search" placeholder="Search..." class="form-control search-input" data-table="customers-list" />
+      </div>
+
+    </nav>
+    <!-- modal -->
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <br />
+          <h2>Add donor info</h2>
+          <br />
+        </div>
+        <br />
+        <div class="modal-body">
+          <div class="form-control">
+            <label for="">Name</label>
+            <input type="text" name="name" id="name" placeholder="write your name" />
+          </div>
+          <div class="form-control">
+            <label for="">Blood group</label>
+            <div class="custom-select" style="width:150px;">
+              <select id="blood-groups">
+                <option value="0" name="group">Select Group:</option>
+                <option value="1" name="group">A+</option>
+                <option value="2" name="group">A-</option>
+                <option value="3" name="group">B+</option>
+                <option value="4" name="group">B-</option>
+                <option value="5" name="group">AB+</option>
+                <option value="6" name="group">AB-</option>
+                <option value="7" name="group">O+</option>
+                <option value="8" name="group">O-</option>
+
+              </select>
+            </div>
+
+          </div>
+
+          <div class="form-control">
+            <label for="">Location</label>
+            <input type="text" name="name" id="name" placeholder="write your name" />
+          </div>
+
+          <div class="form-control">
+            <label for="">Phone</label>
+            <input type="number" name="name" id="name" placeholder="write your name" />
+          </div>
+          <div class="form-control">
+            <label for="">Date</label>
+            <input type="date" name="name" id="date" placeholder="write your name" />
+          </div>
+          <br />
+          <br />
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button onclick="addDonor()" type="submit"> Add</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- modal -->
+    <div class="table-center">
+      <table class="table customers-list" id="myTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Blood</th>
+            <th>location</th>
+            <th>Number</th>
+            <th>Date</th>
+            <th colspan="2">Operation</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+
+
+
+
+        </tbody>
+      </table>
+
+
+
+    </div>
+    <hr>
+  <div class="" id="loading">
+    😑😑😑😑😑
+  </div>
+  <br>
+  <br> <br><br><br>
+
+    <footer class="my-footer">
+      <div id="myBtn">
+        <i class="fa fa-plus"></i>
+      </div>
+      <div>
+        <i class="fa fa-plus"></i>
+      </div>
+      <div>
+        <i class="fa fa-plus"></i>
+      </div>
+      <div>
+        <i class="fa fa-plus"></i>
+      </div>
+    </footer>
+
+    <script>
+    const loading=document.getElementById('loading')
+      const tbody = document.getElementById('tbody')
+      fetch('https://donor-server.herokuapp.com/donors/ab+')
+        .then(res => res.json())
+        .then(data =>
+        {
+          console.log(data)
+          for (let item of data) {
+            console.log(item)
+            const tr = document.createElement('tr')
+
+            tr.innerHTML = `
+    
+                    <td data-label="Name" id="id">${item.name}</td>
+                    <td data-label="Name">${item.name}</td>
+                    <td data-label="Blood" id="blood">${item.blood}</td>
+                    <td data-label="Location">${item.address}</td>
+                    <td data-label="Number">01983548265</td>
+                    <td data-label="Date">${item.date}</td>
+                    <td><a class="edit" href=""><i class="fa fa-pencil-square-o"></i></a><a class="delete" href=""><i class="fa fa-trash"></i></a></td>
+                    
+    
+    `
+    loading.style.display='none'
+            tbody.appendChild(tr)
+          }
+        }).catch(
+          myfun()
+         
+        
+          
+          
+          
+          )
+          
+          function myfun(){
+            const p = document.createElement('p')
+             p.innerHTML=`hellk`
+             loading.style.display='none'
+           tbody.appendChild(p)
+            
+          }
+        
+        function addDonor(){
+          
+          /*
+          fetch('https://donor-server.herokuapp.com/donors', {
+              method: 'POST',
+              body: JSON.stringify({
+                title: 'foo',
+                body: 'bar',
+                userId: 1,
+              }),
+              headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+              },
+            })
+            .then((response) => response.json())
+            .then((json) =>
+            {
+              console.log(json)
+              location.reload()
+            
+            });
+          */
+          
+          
+            var select = document.getElementById('blood-groups');
+          var value = select.options[select.selectedIndex].value;
+          console.log(value); // en
+          
+          const name=document.getElementById('name').value
+         let bloodGroup;
+         
+         if(value==1){
+           bloodGroup='a+'
+         }else if(value==2){
+           bloodGroup='a-'
+         }else if (value == 3) {
+           bloodGroup = 'b+'
+         }else if (value == 4) {
+           bloodGroup = 'b-'
+         }else if (value == 5) {
+           bloodGroup = 'ab+'
+         }else if (value == 6) {
+           bloodGroup = 'ab-'
+         }else if (value == 7) {
+           bloodGroup = 'o+'
+         }else if (value == 8) {
+           bloodGroup = 'o-'
+         }else{
+           bloodGroup=''
+         }
+        blood=bloodGroup
+        
+        const date=document.getElementById('date').value
+         const donor={name,blood,date}
+         
+         console.log(donor)
+         
+         fetch('https://donor-server.herokuapp.com/donors', {
+              method: 'POST',
+              body: JSON.stringify(donor),
+              headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+              },
+            })
+            .then((response) => response.json())
+            .then((json) =>
+            {
+              console.log(json)
+              location.reload()
+            
+            });
+          
+          
+          
+        }
+    </script>
+
+    <script src="main.js"></script>
+
+</body>
+
+</html>
