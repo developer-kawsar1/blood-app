@@ -400,6 +400,33 @@
   color: #fff
   
 }
+
+spinner-10 {
+  width: 50px;
+  aspect-ratio: 1;
+  color: #854f1d;
+  border-radius: 50%;
+  display: grid;
+  background: 
+    conic-gradient(from 90deg at 4px 4px,#0000 90deg,currentColor 0)
+    -4px -4px/calc(50% + 2px) calc(50% + 2px),
+    radial-gradient(farthest-side,currentColor 6px,#0000 7px calc(100% - 6px),currentColor calc(100% - 5px)) no-repeat;
+  animation: s10 2s infinite linear;
+  position: relative;
+}
+.spinner-10:before {
+  content: "";
+  border-radius: inherit;
+  background: inherit;
+  transform: rotate(45deg);
+}
+@keyframes s10 {to{transform: rotate(.5turn)}}
+
+/**/
+
+
+
+
   </style>
 
 </head>
@@ -503,9 +530,9 @@
 
 
     </div>
-    <hr>
+    
   <div class="" id="loading">
-    😑😑😑😑😑
+   <img src="/assets/images/1496.gif" alt="">
   </div>
   <br>
   <br> <br><br><br>
@@ -545,7 +572,7 @@
                     <td data-label="Location">${item.address}</td>
                     <td data-label="Number">01983548265</td>
                     <td data-label="Date">${item.date}</td>
-                    <td><a class="edit" href=""><i class="fa fa-pencil-square-o"></i></a><a class="delete" href=""><i class="fa fa-trash"></i></a></td>
+                    <td><a class="edit" href=""><i class="fa fa-pencil-square-o"></i></a><i onclick="confirmAction('${item._id}')" class="fa fa-trash"></i></td>
                     
     
     `
@@ -553,7 +580,7 @@
             tbody.appendChild(tr)
           }
         }).catch(
-          myfun()
+         // myfun()
          
         
           
@@ -641,6 +668,24 @@
             
             });
           
+          
+          
+        }
+       function confirmAction(item){
+          console.log(item)
+          const proceed = window.confirm('are you sure ?')
+          if (proceed) {
+            const url = `https://enigmatic-lowlands-82160.herokuapp.com/product/${item}`
+            fetch(url, {
+                method: 'DELETE'
+              })
+              .then(res => res.json())
+              .then(data => {
+                console.log(data);
+                const remaining = products.filter(product => product._id !== id)
+                setProducts(remaining)
+              })
+          }
           
           
         }
