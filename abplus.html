@@ -67,9 +67,7 @@
 
     }
 
-    table tbody tr {
-      
-    }
+    table tbody tr {}
 
     nav {
 
@@ -150,7 +148,7 @@
         text-align: right;
         padding-left: 50%;
         position: relative;
-        
+
 
 
       }
@@ -169,10 +167,12 @@
       .table tbody tr:nth-child(odd) td {
         background-color: #f3f3f3;
       }
-      td{
-        background: #fff !important ;
+
+      td {
+        background: #fff !important;
       }
-      td:nth-child(odd){
+
+      td:nth-child(odd) {
         background: #f9f9f9 !important;
       }
 
@@ -383,60 +383,66 @@
     .my-footer i {
       color: #fff;
     }
-   .edit{
-     margin-right:10px;
-   }
-.edit .fa{
-  color: green;
-}
-.delete .fa{
-  color: crimson;
-}
-#id{
-  
-  background-color: #fb7374 !important ;
-  border-top-left-radius: 5px;
-  font-weight: bold;
-  color: #fff
-  
-}
 
-spinner-10 {
-  width: 50px;
-  aspect-ratio: 1;
-  color: #854f1d;
-  border-radius: 50%;
-  display: grid;
-  background: 
-    conic-gradient(from 90deg at 4px 4px,#0000 90deg,currentColor 0)
-    -4px -4px/calc(50% + 2px) calc(50% + 2px),
-    radial-gradient(farthest-side,currentColor 6px,#0000 7px calc(100% - 6px),currentColor calc(100% - 5px)) no-repeat;
-  animation: s10 2s infinite linear;
-  position: relative;
-}
-.spinner-10:before {
-  content: "";
-  border-radius: inherit;
-  background: inherit;
-  transform: rotate(45deg);
-}
-@keyframes s10 {to{transform: rotate(.5turn)}}
+    .edit {
+      margin-right: 10px;
+    }
 
-/**/
+    .edit .fa {
+      color: green;
+    }
 
+    .delete .fa {
+      color: crimson;
+    }
 
+    #id {
 
+      background-color: #fb7374 !important;
+      border-top-left-radius: 5px;
+      font-weight: bold;
+      color: #fff
+    }
 
+    spinner-10 {
+      width: 50px;
+      aspect-ratio: 1;
+      color: #854f1d;
+      border-radius: 50%;
+      display: grid;
+      background:
+        conic-gradient(from 90deg at 4px 4px, #0000 90deg, currentColor 0) -4px -4px/calc(50% + 2px) calc(50% + 2px),
+        radial-gradient(farthest-side, currentColor 6px, #0000 7px calc(100% - 6px), currentColor calc(100% - 5px)) no-repeat;
+      animation: s10 2s infinite linear;
+      position: relative;
+    }
+
+    .spinner-10:before {
+      content: "";
+      border-radius: inherit;
+      background: inherit;
+      transform: rotate(45deg);
+    }
+
+    @keyframes s10 {
+      to {
+        transform: rotate(.5turn)
+      }
+    }
+
+    /**/
   </style>
 
 </head>
 
 <body>
-  
-
+<header class="header">
+  <i onclick="backBtn()"
+  class="fa fa-arrow-left" aria-hidden="true"></i>
+</header>
 
   <div class="table-container">
-    <h1 class="heading">Ab+ Blood Donor Info</h1>
+    <h1 class="heading">Ab+ ডোনার তালিকা</h1>
     <nav>
       <div class="searchbox">
         <input type="search" placeholder="Search..." class="form-control search-input" data-table="customers-list" />
@@ -481,16 +487,16 @@ spinner-10 {
 
           <div class="form-control">
             <label for="">Location</label>
-            <input type="text" name="name" id="name" placeholder="write your name" />
+            <input type="text" name="name" id="location" placeholder="write your location" />
           </div>
 
           <div class="form-control">
             <label for="">Phone</label>
-            <input type="number" name="name" id="name" placeholder="write your name" />
+            <input type="number" name="name" id="phone" placeholder="write your phone" />
           </div>
           <div class="form-control">
             <label for="">Date</label>
-            <input type="date" name="name" id="date" placeholder="write your name" />
+            <input type="date" name="name" id="date" placeholder="write your date" />
           </div>
           <br />
           <br />
@@ -530,12 +536,12 @@ spinner-10 {
 
 
     </div>
-    
-  <div class="" id="loading">
-   <img src="/assets/images/1496.gif" alt="">
-  </div>
-  <br>
-  <br> <br><br><br>
+
+    <div class="" id="loading">
+      <img src="/assets/images/1496.gif" alt="">
+    </div>
+    <br>
+    <br> <br><br><br>
 
     <footer class="my-footer">
       <div id="myBtn">
@@ -553,142 +559,170 @@ spinner-10 {
     </footer>
 
     <script>
-    const loading=document.getElementById('loading')
+      const loading = document.getElementById('loading')
       const tbody = document.getElementById('tbody')
-      fetch('https://donor-server.herokuapp.com/donors/ab+')
+      fetch('https://donor-server.herokuapp.com/groups/ab+')
         .then(res => res.json())
         .then(data =>
         {
-          console.log(data)
+          //try
+          
+          
+
+          //try
+          
+          console.log(data[0])
           for (let item of data) {
             console.log(item)
+
+            //try
+
+            let newDate = new Date(item.date);
+            let date_2 = new Date();
+
+            let difference = newDate.getTime() - date_2.getTime();
+
+            let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+            console.log(TotalDays + ' days to world Cup');
+            console.log(difference);
+
+            console.log(newDate.getDate());
+
+
+            //try
+
             const tr = document.createElement('tr')
 
             tr.innerHTML = `
     
                     <td data-label="Name" id="id">${item.name}</td>
-                    <td data-label="Name">${item.name}</td>
+                   
                     <td data-label="Blood" id="blood">${item.blood}</td>
                     <td data-label="Location">${item.address}</td>
-                    <td data-label="Number">01983548265</td>
+                    <td data-label="Number">${item.phone}</td>
                     <td data-label="Date">${item.date}</td>
+                                        <td data-label="অতিবাহিত হয়েছে">${Math.abs(TotalDays)}</td>
                     <td><a class="edit" href=""><i class="fa fa-pencil-square-o"></i></a><i onclick="confirmAction('${item._id}')" class="fa fa-trash"></i></td>
                     
     
     `
-    loading.style.display='none'
+            loading.style.display = 'none'
             tbody.appendChild(tr)
           }
         }).catch(
-         // myfun()
-         
-        
+          // myfun()
+
+
+
+
+
+        )
+
+      function myfun() {
+        const p = document.createElement('p')
+        p.innerHTML = `hellk`
+        loading.style.display = 'none'
+        tbody.appendChild(p)
+
+      }
+
+      function addDonor() {
+
+        /*
+        fetch('https://donor-server.herokuapp.com/donors', {
+            method: 'POST',
+            body: JSON.stringify({
+              title: 'foo',
+              body: 'bar',
+              userId: 1,
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+          })
+          .then((response) => response.json())
+          .then((json) =>
+          {
+            console.log(json)
+            location.reload()
           
-          
-          
-          )
-          
-          function myfun(){
-            const p = document.createElement('p')
-             p.innerHTML=`hellk`
-             loading.style.display='none'
-           tbody.appendChild(p)
-            
-          }
-        
-        function addDonor(){
-          
-          /*
-          fetch('https://donor-server.herokuapp.com/donors', {
-              method: 'POST',
-              body: JSON.stringify({
-                title: 'foo',
-                body: 'bar',
-                userId: 1,
-              }),
-              headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-              },
-            })
-            .then((response) => response.json())
-            .then((json) =>
-            {
-              console.log(json)
-              location.reload()
-            
-            });
-          */
-          
-          
-            var select = document.getElementById('blood-groups');
-          var value = select.options[select.selectedIndex].value;
-          console.log(value); // en
-          
-          const name=document.getElementById('name').value
-         let bloodGroup;
-         
-         if(value==1){
-           bloodGroup='a+'
-         }else if(value==2){
-           bloodGroup='a-'
-         }else if (value == 3) {
-           bloodGroup = 'b+'
-         }else if (value == 4) {
-           bloodGroup = 'b-'
-         }else if (value == 5) {
-           bloodGroup = 'ab+'
-         }else if (value == 6) {
-           bloodGroup = 'ab-'
-         }else if (value == 7) {
-           bloodGroup = 'o+'
-         }else if (value == 8) {
-           bloodGroup = 'o-'
-         }else{
-           bloodGroup=''
-         }
-        blood=bloodGroup
-        
-        const date=document.getElementById('date').value
-         const donor={name,blood,date}
-         
-         console.log(donor)
-         
-         fetch('https://donor-server.herokuapp.com/donors', {
-              method: 'POST',
-              body: JSON.stringify(donor),
-              headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-              },
-            })
-            .then((response) => response.json())
-            .then((json) =>
-            {
-              console.log(json)
-              location.reload()
-            
-            });
-          
-          
-          
+          });
+        */
+
+
+        var select = document.getElementById('blood-groups');
+        var value = select.options[select.selectedIndex].value;
+        console.log(value); // en
+
+        const name = document.getElementById('name').value
+        let bloodGroup;
+
+        if (value == 1) {
+          bloodGroup = 'a+'
+        } else if (value == 2) {
+          bloodGroup = 'a-'
+        } else if (value == 3) {
+          bloodGroup = 'b+'
+        } else if (value == 4) {
+          bloodGroup = 'b-'
+        } else if (value == 5) {
+          bloodGroup = 'ab+'
+        } else if (value == 6) {
+          bloodGroup = 'ab-'
+        } else if (value == 7) {
+          bloodGroup = 'o+'
+        } else if (value == 8) {
+          bloodGroup = 'o-'
+        } else {
+          bloodGroup = ''
         }
-       function confirmAction(item){
-          console.log(item)
-          const proceed = window.confirm('are you sure ?')
-          if (proceed) {
-            const url = `https://enigmatic-lowlands-82160.herokuapp.com/product/${item}`
-            fetch(url, {
-                method: 'DELETE'
-              })
-              .then(res => res.json())
-              .then(data => {
-                console.log(data);
-                const remaining = products.filter(product => product._id !== id)
-                setProducts(remaining)
-              })
-          }
-          
-          
+        blood = bloodGroup
+
+        const date = document.getElementById('date').value
+        const address = document.getElementById('location').value
+        const phone = document.getElementById('phone').value
+        const donor = { name, blood, date, address, phone }
+
+        console.log(donor)
+
+        fetch('https://donor-server.herokuapp.com/donors', {
+            method: 'POST',
+            body: JSON.stringify(donor),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            },
+          })
+          .then((response) => response.json())
+          .then((json) =>
+          {
+            console.log(json)
+            location.reload()
+
+          });
+
+
+
+      }
+
+      function confirmAction(item) {
+        console.log(item)
+        const proceed = window.confirm('are you sure ?')
+        if (proceed) {
+          const url = `https://donor-server.herokuapp.com/donors/${item}`
+          fetch(url, {
+              method: 'DELETE'
+            })
+            .then(res => res.json())
+            .then(data => {
+              console.log(data);
+              //const remaining = //.filter(product => product._id !== id)
+              // setProducts(remaining)
+              window.location.reload()
+            })
         }
+
+
+      }
     </script>
 
     <script src="main.js"></script>

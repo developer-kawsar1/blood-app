@@ -103,3 +103,15 @@ footer{
     height: 168px;
   }
 }
+
+
+header {
+  background: #FB7374;
+  padding: 20px 5%;
+  
+}
+
+header .fa{
+  color: #fff;
+  font-size: 30px;
+}
